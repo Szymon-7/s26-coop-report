@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Co-op Report — Realistic Pedestrians for Autonomous Driving Simulation</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+
+<!-- Bootstrap (vendored locally so the site doesn't depend on an external CDN) -->
+<link href="assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom theme -->
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav id="site-nav" class="navbar navbar-expand-lg fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#hero">Szymon Patryn<span class="accent"> · </span>Work Term Report</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navContent">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#intro">Intro</a></li>
+        <li class="nav-item"><a class="nav-link" href="#employer">Employer</a></li>
+        <li class="nav-item"><a class="nav-link" href="#goals">Goals</a></li>
+        <li class="nav-item"><a class="nav-link" href="#project">The Project</a></li>
+        <li class="nav-item"><a class="nav-link" href="#reflection">Reflection</a></li>
+        <li class="nav-item"><a class="nav-link" href="#conclusion">Conclusion</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header id="hero" class="hero">
+  <div class="container hero-inner">
+    <div class="row align-items-center gy-5">
+      <div class="col-lg-6">
+        <p class="eyebrow-tag">CO-OP WORK TERM REPORT</p>
+        <h1 class="hero-title">Teaching self-driving cars<br>to see people<br><span class="accent-underline">like people.</span></h1>
+        <p class="hero-sub">
+            S26 Co-op &middot; Autonomous Driving Simulation
+            Researcher <br />
+            University of Guelph, School of Computer Science
+        </p>
+        <p class="hero-desc">
+            A work term spent inside the CARLA driving
+            simulator, building more human, less predictable
+            pedestrians, and the pipeline that uses them
+            to train and stress-test autonomous driving (AD) models.
+        </p>
+      </div>
+      <div class="col-lg-6">
+        <div class="detection-frame">
+          <video class="detection-media zoomable" autoplay muted loop playsinline>
+              <source src="assets/video/overtake.mp4" type="video/mp4">
+          </video>
+        </div>
+        <p class="caption">Fig. 1 - AD model attempts to overtake but is interrupted by jaywalking pedestrian</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ INTRO ============ -->
+  <section id="intro" class="section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <p class="section-label">01 - Introduction</p>
+          <p class="lede">
+            This site walks through my summer co-op at the
+            University of Guelph, where I worked on
+            improving pedestrian realism in the CARLA
+            simulator. By the end, you should understand why
+            pedestrian behaviour is a weak point in
+            autonomous driving simulation, what I built to
+            address it, and how it fits into a larger
+            pipeline for training and evaluating AD models.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EMPLOYER ============ -->
+  <section id="employer" class="section section-alt">
+    <div class="container">
+      <div class="row gy-4 align-items-start">
+        <div class="col-lg-4">
+          <p class="section-label">02 - The Employer</p>
+          <h2 class="section-title">Yulia Kotseruba</h2>
+          <img src="assets/images/employer.jpg" alt="Yulia Kotseruba" class="employer-image"/>
+        </div>
+        <div class="col-lg-8">
+          <p>
+            Yulia Kotseruba works in computer vision and
+            artificial intelligence, focused on building
+            vision systems inspired by human cognition for
+            autonomous and assistive driving. The team I
+            joined here at the University of Guelph works in
+            this area of artificial intelligence for
+            driving, specifically with vision language
+            models. Do you know that Yulia Kotseruba
+            co-wrote a book which examined more than
+            3,000 publications? The research by her and
+            her colleagues was based on synthesizing
+            information regarding 80 various cognitive architectures
+            which appeared from the 1950s till now.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GOALS ============ -->
+  <section id="goals" class="section">
+    <div class="container">
+      <p class="section-label">03 - Goals &amp; Learning Outcomes</p>
+      <h2 class="section-title mb-5">What I set out to learn</h2>
+      <div class="row g-4">
+
+        <div class="col-md-6">
+          <div class="goal-card">
+            <span class="goal-status goal-status--done">Achieved</span>
+            <h3>Professional &amp; technical communication</h3>
+            <p>Weekly meetings with my supervisor and stand-ups with the research group
+            pushed me to explain my work clearly and ask better questions. I came
+            out of the term much more confident discussing technical ideas out loud.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="goal-card">
+            <span class="goal-status goal-status--done">Achieved</span>
+            <h3>Understanding the research process</h3>
+            <p>In my first real research role, I learned how to effectively read and critique academic
+            papers, shape a research question, and evaluate different approaches. These are
+            skills that made every part of the project easier as the term went on.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="goal-card">
+            <span class="goal-status goal-status--done">Achieved</span>
+            <h3>Linux &amp; the research tooling stack</h3>
+            <p>I got comfortable fast with Linux, Python, Git, and CARLA. As well as navigating
+            and extending a large codebase and integrating outside libraries and AD models.
+            I now run Linux as my daily OS by choice.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="goal-card">
+            <span class="goal-status goal-status--done">Achieved</span>
+            <h3>Building &amp; debugging a full simulation pipeline</h3>
+            <p>I built a complete CARLA pipeline with realistic pedestrians, attachable
+            AD models, and probabilistic scene generation with Scenic. I presented
+            it at team meetings, an undergraduate research poster session, and an undergraduate research talk.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ THE PROJECT ============ -->
+  <section id="project" class="section section-alt">
+    <div class="container">
+      <p class="section-label">04 - The Project</p>
+      <h2 class="section-title mb-4">Closing the sim-to-real gap, one pedestrian at a time</h2>
+      <div class="row">
+        <div class="col-lg-8">
+          <p>
+            AD models trained purely in simulation often struggle when deployed in the real
+            world. This is a problem known as the <em>sim-to-real gap</em>. One overlooked source
+            of that gap are simulated pedestrians. By default, CARLA's pedestrians walk at a fixed
+            speed along scripted paths, do not react to traffic, and cannot even jaywalk. This is nothing like the mix of
+            cautious, distracted, and impatient people an autonomous vehicle actually has to
+            handle. If an AD model is only ever trained or tested against that, it's being
+            graded on an easy exam.
+          </p>
+        </div>
+      </div>
+
+      <!-- Sub-block: what we changed -->
+      <div class="row align-items-center gy-4 mt-4 project-row">
+        <div class="col-lg-6 order-lg-2">
+          <div class="compare-slider" id="pedestrianCompare">
+            <video class="compare-img compare-img--after" autoplay muted loop playsinline>
+              <source src="assets/video/rolling_gap.mp4" type="video/mp4">
+            </video>
+            <video class="compare-img compare-img--before" autoplay muted loop playsinline>
+              <source src="assets/video/standard.mp4" type="video/mp4">
+            </video>
+            <span class="compare-label compare-label--left">DEFAULT</span>
+            <span class="compare-label compare-label--right">OURS</span>
+            <div class="compare-handle"></div>
+            <input type="range" class="compare-range" min="0" max="100" value="50" aria-label="Drag to compare default vs. realistic pedestrian behaviour">
+          </div>
+          <p class="caption">Fig. 2 - Drag to compare default CARLA pedestrian behaviour against ours</p>
+        </div>
+        <div class="col-lg-6 order-lg-1">
+          <h3>What we added</h3>
+          <ul class="feature-list">
+            <li>Each pedestrian is assigned a type, personality, and law-obedience trait at spawn,
+            sampled from real published distributions, not a single generic walker or random assignments.</li>
+            <li>Walking speed, gap-acceptance (time-gap required to cross), and how well their
+            ability to judge oncoming traffic all vary per pedestrian instead of being fixed constants.</li>
+            <li>Different kinds of routes reflect that: "obedient" pedestrians use crosswalks, some jaywalk,
+            and "average" pedestrians weigh the detour, and can change their mind and
+            reroute mid-simulation if they've waited too long.</li>
+            <li>Crossing decisions are continuous, not one-time: pedestrians keep re-checking
+            traffic while crossing, using real acceleration and speed-limit-aware time-to-collision
+            estimates, and can grow impatient (accepting smaller gaps) the longer they wait.</li>
+            <li>Pedestrians react properly to parked/stopped cars and to a vehicle's turn signal
+            and actual curving path. They are able to navigate around stopped cars and mark vehicles turning out of their way as irrelevant</li>
+          </ul>
+          <p>All of this combined replaces one predictable "pedestrian" with a population that behaves
+          the way real crossing decisions actually get made, which is exactly the kind of
+          messiness an AD model needs to be trained and tested against.</p>
+        </div>
+      </div>
+
+      <!-- Sub-block: pipeline -->
+      <div class="mt-5 project-row">
+        <div class="row">
+          <div class="col-lg-8">
+            <h3>The pipeline</h3>
+            <p>
+              By the end of the term, we had a working pipeline where AD models from the CARLA leaderboard can be
+              dropped into CARLA alongside our realistic pedestrians. We chose 3 distinct models with very different architectures for our testing.
+              Under the hood, a data pipeline feeds each vehicle's lane, acceleration, and live speed limit into the
+              pedestrian model every tick with noise applied, so pedestrians are reacting to real traffic conditions
+              rather than a simplified stand-in, letting us train and stress-test AD models
+              against pedestrian behaviour that's much closer to the real world.
+            </p>
+          </div>
+        </div>
+        <div class="diagram-panel mt-3">
+          <img src="assets/images/pipeline-diagram.png" alt="Diagram of the pipeline connecting AD models and realistic pedestrians inside CARLA" class="diagram-media">
+        </div>
+        <p class="caption">Fig. 3 - Pipeline diagram: scene generation + pedestrian & AD model attachment + evaluation</p>
+      </div>
+
+      <!-- Sub-block: results -->
+      <div class="row mt-5">
+        <div class="col-lg-8">
+          <h3>Where things stand</h3>
+          <p>
+            We're currently running experiments to measure how AD model performance, things
+            like collision rate and how cautiously the model drives near pedestrians, changes
+            when it's trained and evaluated against these realistic pedestrians instead of CARLA's
+            defaults. Quantitative results are still being collected, but we expect to see a worse performance
+            on our pedestrians from our starting results.
+          </p>
+        </div>
+      </div>
+
+      <!-- Sub-block: the paper -->
+      <div class="row mt-5">
+        <div class="col-lg-8">
+          <h3>Writing it up</h3>
+          <p>
+            Alongside the implementation work, I've been reading related research on
+            pedestrian behaviour modelling and sim-to-real transfer, including my supervisor's
+            "Intend-Wait-Cross" pedestrian model our trait system builds on, and drafting
+            a paper on our approach with our pipeline in CARLA. The paper isn't finished yet, but going through that process
+            taught me how to structure an argument, ask better questions, and verify that sources are credible.
+            Most importantly however, it showed me how much of an iterative process research is, it doesn't just happen overnight.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY ============ -->
+  <section id="gallery" class="section">
+    <div class="container">
+      <p class="section-label">05 - From the Simulator</p>
+      <h2 class="section-title mb-4">A closer look</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="detection-frame detection-frame--sm">
+            <video class="detection-media zoomable" autoplay muted loop playsinline>
+              <source src="assets/video/sudden_stop.mp4" type="video/mp4">
+            </video>
+          </div>
+          <p class="caption">Fig. 4 - Jaywalking pedestrian causes AD model to suddenly brake</p>
+        </div>
+        <div class="col-md-4">
+          <div class="detection-frame detection-frame--sm">
+            <video class="detection-media zoomable" autoplay muted loop playsinline>
+              <source src="assets/video/safe_cross.mp4" type="video/mp4">
+            </video>
+          </div>
+          <p class="caption">Fig. 5 - Pedestrian safely crossing after realizing oncoming traffic is turning</p>
+        </div>
+        <div class="col-md-4">
+          <div class="detection-frame detection-frame--sm">
+            <video class="detection-media zoomable" autoplay muted loop playsinline>
+              <source src="assets/video/group_crossing.mp4" type="video/mp4">
+            </video>
+          </div>
+          <p class="caption">Fig. 6 - Group of crossing pedestrians cause AD model to go outside its lane</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REFLECTION ============ -->
+  <section id="reflection" class="section section-alt">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <p class="section-label">06 - Reflection</p>
+          <h2 class="section-title mb-4">What this term changed for me</h2>
+          <p>
+            Coming into this term, I hadn't done research work before, by the end, reading
+            papers, forming a hypothesis, and testing it against actual simulation results felt
+            like a normal way to approach a problem rather than something intimidating. I also
+            went from being cautious around a large, unfamiliar codebase to comfortably
+            navigating and extending one.
+          </p>
+          <p>
+            If I could change one thing, it'd be reading documentation more thoroughly before
+            diving in. I tend to jump straight into a new library or repo and start experimenting,
+            and that usually works, but more than once this term it cost me hours debugging
+            something CARLA's docs or a repo's README had already explained clearly. It's a small
+            habit change, but one I'm taking into every project after this.
+          </p>
+          <p>
+            More than anything, this term is what convinced me I want to keep working in this
+            space. I'm coming out of it wanting to take more AI/ML coursework going forward and,
+            as it turns out, I get to keep pursuing exactly that.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONCLUSION ============ -->
+  <section id="conclusion" class="section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <p class="section-label">07 - Conclusion</p>
+          <p class="lede">
+              If there's one thing to take from this site, it's that small, overlooked details,
+              like how a simulated pedestrian decides to cross a street, can be
+              exactly where the gap between simulation and reality hides. My next co-op is back
+              with the same supervisor, in person at the university's DRiVE lab, helping move their existing
+              simulation stack over to CARLA, largely because of the CARLA experience I
+              built this term.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ACKNOWLEDGMENTS ============ -->
+  <section id="ack" class="section section-alt">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <p class="section-label">08 - Acknowledgments</p>
+          <p>
+              Thanks to my supervisor Yulia Kotseruba, her team of research students,
+              and the University of Guelph and their co-op department for their support
+              and guidance throughout this term. Also a big thanks to the University of Guelph
+              and the Natural Sciences and Engineering Research Council of Canada (NSERC) for
+              the funding that made this work term possible for me!
+          </p>
+          <p>
+              The core of all of this, the photorealistic open-source CARLA simulator for
+              autonomous driving research is available at: <a href="https://carla.org/">CARLA</a>
+          </p>
+          <p>
+              The inspiration and thought behind pedestrian behaviour modelling was based off my
+              supervisor's previous work: <a href="https://arxiv.org/pdf/2203.07324">Intend-wait-cross
+              by Amir Rasouli and Yulia Kotseruba</a>
+          </p>
+          <p>
+              The social force model used for our pedestrians and their navigation was modified
+              and used from: <a href="https://github.com/felixlutz/carla-social-force-model">
+              carla-social-force-model by felixlutz</a>
+          </p>
+          <p>
+              The attachment of AD models in our CARLA simulation and pipeline was modified and used
+              from: <a href="https://github.com/MasoudJTehrani/PCLA">PCLA by MasoudJTehrani</a>
+          </p>
+          <p>
+              The metrics used and reported at the end of our pipeline are directly from the CARLA leaderboard,
+              which code used is available here: <a href="https://github.com/carla-simulator/scenario_runner">
+              scenario_runner by CARLA Team</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+      <p>Szymon Patryn &middot; Computer Science &middot; University of Guelph &middot; S26</p>
+  </div>
+</footer>
+
+<div id="scroll-spacer"></div>
+
+<div id="lightbox" class="lightbox">
+  <button class="lightbox-close" aria-label="Close">&times;</button>
+  <img src="" alt="" class="lightbox-img">
+  <video class="lightbox-img lightbox-video" autoplay muted loop playsinline></video>
+</div>
+
+<script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+<script>
+// Custom scrollspy (Bootstrap's built-in version struggled with our uneven
+// section heights). This checks scroll position against each section's
+// actual position, and uses an invisible spacer at the end of the page to
+// guarantee there's always enough room to scroll the last section's top
+// up to the nav line - otherwise short trailing sections near the bottom
+// of the page can never become "active".
+(function () {
+  var navLinks = Array.prototype.slice.call(
+    document.querySelectorAll('#navContent .nav-link')
+  );
+  var sections = navLinks.map(function (link) {
+    return document.querySelector(link.getAttribute('href'));
+  });
+  var spacer = document.getElementById('scroll-spacer');
+
+  function navHeight() {
+    var nav = document.getElementById('site-nav');
+    return nav ? nav.offsetHeight : 0;
+  }
+
+  function sizeSpacer() {
+    if (!spacer || !sections.length) return;
+    spacer.style.height = '0px'; // reset first so measurements below aren't self-inflated
+    var lastSection = sections[sections.length - 1];
+    var threshold = navHeight() + 24;
+    // Room still needed below the last section's top so that scrolling can
+    // bring it all the way up to the threshold line, even after the page
+    // has been scrolled as far down as it can go.
+    var needed = (lastSection.offsetTop + window.innerHeight) - document.documentElement.scrollHeight - threshold;
+    spacer.style.height = Math.max(0, needed) + 'px';
+  }
+
+  function setActive() {
+    var scrollPos = window.scrollY + navHeight() + 24; // small buffer past the nav
+    var currentIndex = -1;
+
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i] && sections[i].offsetTop <= scrollPos) {
+        currentIndex = i;
+      }
+    }
+
+    navLinks.forEach(function (link, i) {
+      link.classList.toggle('active', i === currentIndex);
+    });
+  }
+
+  var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      window.requestAnimationFrame(function () {
+        setActive();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+  window.addEventListener('resize', function () {
+    sizeSpacer();
+    setActive();
+  });
+
+  sizeSpacer();
+  setActive();
+})();
+
+// Before/after comparison slider - finds every .compare-slider on the
+// page and wires its hidden range input to the CSS custom property that
+// controls how much of the "before" image is clipped away.
+(function () {
+  document.querySelectorAll('.compare-slider').forEach(function (slider) {
+    var range = slider.querySelector('.compare-range');
+    if (!range) return;
+
+    function update() {
+      slider.style.setProperty('--pos', range.value + '%');
+    }
+
+    range.addEventListener('input', update);
+    update();
+  });
+})();
+
+// Lightbox: click any .zoomable image or video to view it fullscreen
+(function () {
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = lightbox.querySelector('.lightbox-img:not(.lightbox-video)');
+  var lightboxVideo = lightbox.querySelector('.lightbox-video');
+  var closeBtn = lightbox.querySelector('.lightbox-close');
+
+  function open(el) {
+    if (el.tagName === 'VIDEO') {
+      lightboxVideo.querySelector('source') || lightboxVideo.appendChild(document.createElement('source'));
+      lightboxVideo.src = el.currentSrc || el.querySelector('source').src;
+      lightboxVideo.style.display = 'block';
+      lightboxImg.style.display = 'none';
+      lightboxVideo.play();
+    } else {
+      lightboxImg.src = el.src;
+      lightboxImg.alt = el.alt || '';
+      lightboxImg.style.display = 'block';
+      lightboxVideo.style.display = 'none';
+    }
+    lightbox.classList.add('is-open');
+  }
+
+  function close() {
+    lightbox.classList.remove('is-open');
+    lightboxImg.src = '';
+    lightboxVideo.pause();
+    lightboxVideo.src = '';
+  }
+
+  document.querySelectorAll('.zoomable').forEach(function (el) {
+    el.addEventListener('click', function () {
+      open(el);
+    });
+  });
+
+  closeBtn.addEventListener('click', close);
+  lightbox.addEventListener('click', function (e) {
+    if (e.target === lightbox) close();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+</script>
+</body>
+</html>
